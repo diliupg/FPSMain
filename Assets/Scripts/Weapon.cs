@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
 
      // shooting
      public bool isShooting, readyToShoot;
-     bool allowReset = true;
+       bool allowReset = true;
      public float shootingDelay = 2f;
 
      // burst
