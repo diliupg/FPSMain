@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
 
             ObjectWeHit.gameObject.GetComponent<Bottle>().Shatter();
 
-            // we will not destroy the bullet on impact, as it will destroy on lifetime end
+            // we will not destroy the bullet on impact, as it will destroy on life time end
         }            
     }
 

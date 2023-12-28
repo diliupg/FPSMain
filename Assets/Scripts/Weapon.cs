@@ -5,7 +5,6 @@ using UnityEngine.Experimental.Rendering;
 
 public class Weapon : MonoBehaviour
 {
-     public Camera playerCamera;
 
      // shooting
      public bool isShooting, readyToShoot;
@@ -100,7 +99,7 @@ public class Weapon : MonoBehaviour
      
     public Vector3 CalculateDirectionAndSpread()
     {
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
 
         Vector3 targetPoint;
