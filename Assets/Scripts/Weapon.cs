@@ -68,7 +68,7 @@ public class Weapon : MonoBehaviour
         // instantiate the bullet
          GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
         
-        // point at the shooting direction
+        // point the bullet to face the shooting direction
          bullet.transform.forward = shootingDirection;
 
         // shoot the bullet
