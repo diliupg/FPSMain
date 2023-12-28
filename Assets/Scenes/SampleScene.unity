@@ -257,7 +257,7 @@ Transform:
   m_GameObject: {fileID: 110433884}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.227, z: 1.1}
+  m_LocalPosition: {x: 0, y: 1.33, z: 1.1}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -358,7 +358,7 @@ MonoBehaviour:
   bulletSpawn: {fileID: 1372745207}
   bulletVelocity: 500
   bulletLifetime: 3
-  currentShootingMode: 0
+  currentShootingMode: 2
 --- !u!1 &121247296
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class Weapon : MonoBehaviour
 
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
-    public float bulletVelocity = 30f;
+    public float bulletVelocity = 500f;
     public float bulletLifetime = 3f;
 
      public enum ShootingMode
@@ -49,7 +49,7 @@ public class Weapon : MonoBehaviour
         else if (currentShootingMode == ShootingMode.Single ||
                 currentShootingMode == ShootingMode.Burst)
         {
-            isShooting = Input.GetKeyDown(KeyCode.Mouse0);
+            isShooting = Input.GetKeyDown(KeyCode.Mouse0);  
         }
 
         if(readyToShoot && isShooting)
@@ -72,7 +72,7 @@ public class Weapon : MonoBehaviour
          bullet.transform.forward = shootingDirection;
 
         // shoot the bullet
-         bullet.GetComponent<Rigidbody>().AddForce(bulletSpawn.forward.normalized * bulletVelocity, ForceMode.Impulse);
+         bullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletVelocity, ForceMode.Impulse);
         // Destroy the bullet AFTER SOME TIME
         StartCoroutine(DestroyBulletAfterTime(bullet, bulletLifetime));
 
