@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 
 public class Weapon : MonoBehaviour
 {
@@ -14,7 +12,7 @@ public class Weapon : MonoBehaviour
      public float shootingDelay = 2f;
 
      // burst
-     [Header("Set this to 1 or more to prevent division")]
+     [Header("Set this to 1 or more to prevent division by 0")]
      public int bulletsPerBurst = 4;
      public int burstBulletsLeft;
 
@@ -37,8 +35,8 @@ public class Weapon : MonoBehaviour
     [Header ("Set this for Auto Reload")]
     public bool autoReload;
     
-    // UI
-    public TextMeshProUGUI ammoDisplay;
+    
+    
 
      public enum ShootingMode
      {
@@ -60,6 +58,10 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
+        if(bulletsLeft == 0 && isShooting)
+        {
+            SoundManager.Instance.Pistol_MagEmpty.Play();
+        }
         if (currentShootingMode == ShootingMode.Auto)
         {
             // holding down Left Mouse Button
@@ -71,7 +73,7 @@ public class Weapon : MonoBehaviour
             isShooting = Input.GetKeyDown(KeyCode.Mouse0);  
         }
 
-        if(readyToShoot && isShooting)
+        if(readyToShoot && isShooting && bulletsLeft > 0)
         {
             burstBulletsLeft = bulletsPerBurst;
             FireWeapon();
@@ -82,15 +84,15 @@ public class Weapon : MonoBehaviour
             Reload();
         }
 
-        // auto Reload
-        if (autoReload && !isShooting && !isReloading && bulletsLeft <= 0)
+        // auto Reload if the autoReload bool is set
+        if (autoReload && !isShooting && !isReloading && bulletsLeft >= 0)
         {
             Reload();
         }
         
-        if (ammoDisplay != null)
+        if (AmmoManager.Instance.ammoDisplay != null)
         {
-            ammoDisplay.text = $"{bulletsLeft/bulletsPerBurst}/{magazineSize/bulletsPerBurst}";
+            AmmoManager.Instance.ammoDisplay.text = $"{bulletsLeft/bulletsPerBurst}/{magazineSize/bulletsPerBurst}";
         }
     }
 
@@ -137,6 +139,8 @@ public class Weapon : MonoBehaviour
 
     private void Reload()
     {
+        SoundManager.Instance.Pistol_Reload.Play();
+
         isReloading = true;
         Invoke("ReloadCompleted", reloadTime);
     }

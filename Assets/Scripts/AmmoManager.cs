@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class AmmoManager : MonoBehaviour
 {
-    public static AmmoManager Instance {get; set;}
+     public static AmmoManager Instance {get; set;}
 
-    public GameObject bulletImpactEffectPrefab;
+     // UI
+    public TextMeshProUGUI ammoDisplay; 
 
     private void Awake()
     {
