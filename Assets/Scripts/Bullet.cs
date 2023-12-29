@@ -8,8 +8,6 @@ public class Bullet : MonoBehaviour
     {
         if(ObjectWeHit.gameObject.CompareTag("Target"))
         {
-            print("Hit Target");
-
             createBulletImpactEffect(ObjectWeHit);
 
             Destroy(gameObject);
@@ -17,8 +15,6 @@ public class Bullet : MonoBehaviour
 
         if(ObjectWeHit.gameObject.CompareTag("Wall"))
         {
-            print("Hit wall");
-
             createBulletImpactEffect(ObjectWeHit);
 
             Destroy(gameObject);
@@ -26,8 +22,6 @@ public class Bullet : MonoBehaviour
 
         if(ObjectWeHit.gameObject.CompareTag("Ground"))
         {
-            print("Hit Ground");
-
             createBulletImpactEffect(ObjectWeHit);
 
             Destroy(gameObject);
@@ -35,8 +29,6 @@ public class Bullet : MonoBehaviour
 
         if(ObjectWeHit.gameObject.CompareTag("Shatter"))
         {
-            print("Hit Shatterable object");
-
             ObjectWeHit.gameObject.GetComponent<Bottle>().Shatter();
 
             // we will not destroy the bullet on impact, as it will destroy on life time end
