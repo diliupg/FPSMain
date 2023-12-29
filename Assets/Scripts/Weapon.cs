@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
@@ -12,6 +14,7 @@ public class Weapon : MonoBehaviour
      public float shootingDelay = 2f;
 
      // burst
+     [Header("Set this to 1 or more to prevent division")]
      public int bulletsPerBurst = 4;
      public int burstBulletsLeft;
 
@@ -25,6 +28,18 @@ public class Weapon : MonoBehaviour
 
     public GameObject muzzleEffect;
     private Animator animator;
+
+    // loading
+    public float reloadTime;
+    public int magazineSize, bulletsLeft;
+    public bool isReloading;
+
+    [Header ("Set this for Auto Reload")]
+    public bool autoReload;
+    
+    // UI
+    public TextMeshProUGUI ammoDisplay;
+
      public enum ShootingMode
      {
         Single,
@@ -39,6 +54,8 @@ public class Weapon : MonoBehaviour
         readyToShoot = true;
         burstBulletsLeft = bulletsPerBurst;
         animator = GetComponent<Animator>();
+
+        bulletsLeft = magazineSize;
     }
 
     void Update()
@@ -59,10 +76,28 @@ public class Weapon : MonoBehaviour
             burstBulletsLeft = bulletsPerBurst;
             FireWeapon();
         }
+
+        if(Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !isReloading)
+        {
+            Reload();
+        }
+
+        // auto Reload
+        if (autoReload && !isShooting && !isReloading && bulletsLeft <= 0)
+        {
+            Reload();
+        }
+        
+        if (ammoDisplay != null)
+        {
+            ammoDisplay.text = $"{bulletsLeft/bulletsPerBurst}/{magazineSize/bulletsPerBurst}";
+        }
     }
 
     private void FireWeapon()
     {
+        bulletsLeft --;
+
         muzzleEffect.GetComponent<ParticleSystem>().Play();
         animator.SetTrigger("Recoil");
 
@@ -96,6 +131,20 @@ public class Weapon : MonoBehaviour
             burstBulletsLeft --;
             Invoke("FireWeapon", shootingDelay);
         }
+
+    }
+
+
+    private void Reload()
+    {
+        isReloading = true;
+        Invoke("ReloadCompleted", reloadTime);
+    }
+
+    private void ReloadCompleted()
+    {
+        bulletsLeft = magazineSize;
+        isReloading = false;
 
     }
 
